@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include <string.h>
+#include <iostream.h>
+#define false 0
+#define true 1
+
+typedef struct
+{ char name[20];
+char surname[20];
+unsigned klass;
+char form[1];
+} pupil;
+char fname[81]="n:\\files\\pupil.txt";
+
+void input(int n)
+{
+ pupil p;
+ int i;
+ FILE *fp;
+ fp=fopen(fname,"w+b");
+   for (i=1;i<=n;i++)
+   {
+   cout<<"Input "<<i<<" name ";
+   gets(p.name);
+   cout<<"Input "<<i<<" surname ";
+   gets(p.surname);
+   cout<<"Input "<<i<<" class ";
+   cin>>p.klass;
+   cout<<"Input "<<i<<" form ";
+   gets(p.form);
+   fwrite(&p,sizeof(p),1,fp)  ;
+   }
+ fclose(fp);
+}
+
+void search(int n)
+{
+  pupil p1,p;
+  int i,j;
+  bool b;
+  FILE *fp;
+
+  fp=fopen(fname,"r+b");
+  b=0;
+
+  i=0;
+  while ((b==0)&(i<=n))
+   { i++;
+      fseek(fp, (i-1)*sizeof(p), SEEK_SET)      ;
+      fread(&p,sizeof(p),1,fp);
+      
+      j=i;
+        cout<<"1";
+    while ((b==0)&(j<=n)) ;
+    { j++;
+    fread(&p1,sizeof(p1),1,fp);
+     
+    if (p1.surname==p.surname)   b=1;
+    }
+
+  if (b==1)
+    cout<<"There are pupils with same surname in the school\n";
+    else cout<<"There are no pupils with same surname in the school\n";
+   }
+   fclose(fp);
+}
+
+void main()
+{
+int n;
+cout<<"Input n";
+cin>>n;
+input(n);
+search(n);
+}

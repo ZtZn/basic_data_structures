@@ -1,0 +1,175 @@
+
+#include "stdafx.h"
+#include <iostream>
+
+using namespace std;
+
+struct element
+{
+	int data;
+	element* next;
+};
+
+bool isEmpty(element* head)
+{
+	return (head == NULL);
+}
+
+int Size(element* head)
+{
+	int count = 0;
+	element* temp = head;	
+	while (temp != NULL)
+	{
+		count++;
+		temp = temp->next;
+	}	
+	return count;
+}
+
+void PrintList(element* head)
+{
+	element* temp = head;
+	if (temp == NULL)
+	{
+		cout << "List is empty ";
+	}
+	else
+	{
+		while (temp != NULL)
+		{
+			cout << "  " << temp->data;
+			temp = temp->next;
+		}
+	}
+	cout << "\n\n ";
+}
+
+void AddFirst(element* &head, int a)
+{
+	element* temp = new element;
+	temp->data = a;
+	temp->next = head;
+	head = temp;
+}
+
+void AddLast(element* &head, int a)
+{
+	element* temp = new element;
+	temp->data = a;
+	temp->next = NULL;
+
+	element* temp2 = head;
+	if (temp2 == NULL)
+	{
+		head = temp;
+	}
+	else
+	{
+		while (temp2->next != NULL)		
+			temp2 = temp2->next;
+		temp2->next = temp;
+	}	
+}
+
+//вставка элемента a в список head на место с номером b
+void AddAt(element* &head, int a, int b)
+{	
+		element* temp = new element;
+		temp->data = a;
+		temp->next = NULL;
+
+		element* temp2 = head;
+		if ((b == 1))
+		{
+			temp->next = head;
+			head = temp;
+		}
+		else
+		{
+			int k = 1;
+			while (k < (b - 1))
+			{
+				temp2 = temp2->next;
+				k++;
+			}
+			temp->next = temp2->next;
+			temp2->next = temp;
+		}	
+}
+
+void DeleteFirst(element* &head)
+{
+	element* temp = head;
+	head = head->next;
+	delete temp;
+}
+
+void DeleteLast(element* &head)
+{	
+	element* temp = head;
+	if (temp->next == NULL)
+	{
+		head = NULL;
+		delete temp;
+	}
+	else
+	{
+		while (temp->next->next != NULL)
+			temp = temp->next;
+		delete temp->next;
+		temp->next = NULL;
+	}
+}
+
+void DeleteAt(element* &head, int b)
+{	
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	cout << "Hello world! \n\n";
+
+	element* a = NULL;	
+
+	PrintList(a);
+	AddFirst(a, 5);
+	PrintList(a);	
+
+	element* b = NULL;
+
+	PrintList(b);
+	AddLast(b, 1);
+
+	PrintList(b);
+	AddLast(b, 2);
+
+	PrintList(b);
+	AddLast(b, 3);
+
+	PrintList(b);
+	AddLast(b, 4);
+
+	PrintList(b);
+	AddLast(b, 5);
+
+	PrintList(b);
+	
+	int c = 1;
+	//проверки перед вставкой
+	if ((Size(b) + 1 >= c) && (c>0))
+	{
+		AddAt(b, 44, c);
+	}
+	PrintList(b);
+	c = 3;
+	if ((Size(b) >= c) && (c > 0))
+	{
+		//DeleteAt(b, c);
+	}
+	PrintList(b);
+
+	system("pause");
+	return 0;
+}
+

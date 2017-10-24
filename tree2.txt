@@ -1,0 +1,50 @@
+template< typename T >
+MyTree<T>* FindRec(MyTree<T> *root, T k)
+{
+	if (root == NULL)
+		return NULL;
+	else
+	{
+		if (root->data == k)
+			return root;
+		MyTree<T> *t = FindRec(root->left, k);
+		if (t != NULL)
+			return t;
+		else
+			return FindRec(root->right, k);
+	}
+}
+
+template< typename T >
+void CreateNode(MyTree<T> *root, T k, char c)
+{	
+	MyTree<T> *t = new MyTree<T>;
+	t->data = k;
+	t->left = NULL;
+	t->right = NULL;
+	if (c == 'r')
+		root->right = t;
+	else
+		root->left = t;	
+}
+
+template< typename T >
+void AddTo(MyTree<T> *root, T parent, T child, char c)
+{
+	if (root == NULL) // если дерево пустое
+		cout << "Tree is empty \n";
+	else // если не пустое
+	{
+		MyTree<T> *t = FindRec(root, parent); // ищем в дереве вершину, содержащую значение parent
+		if (t == NULL) // если ничего не нашли
+			cout << "in this tree there is no such 'parent' \n";
+		else // если в t лежит указатель на нужную вершину дерева
+		if ( ( (c == 'r') && (t->right != NULL) )      // проверяем есть ли у этой вершине в дереве потомки,
+			|| ( (c == 'l') && (t->left != NULL) ) ) // соответствующие параметру с
+			cout << "such 'parent' has already a child there \n";
+		else  // если место для нужного потомка не занято - создаем его
+			CreateNode(t, child, c); // действия по созданию новой вершины можно выделить в отдельную функцию
+	}
+}
+
+

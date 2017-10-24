@@ -1,0 +1,51 @@
+Даны вещественные числа a1,b1,a2,b2,...,a50,b50 (ai<bi). Рассматривая пары ai и bi, как левые и правые концы отрезков на одной и той же прямой, определить длину отрезка, являющегося пересечением всех этих отрезков. Для этого использовать функцию , определяющую пересечение двух отрезков.
+
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+void intersection(double a, double b, double c, double d, double &e, double &f)
+{
+	if(a>=c&&b<=d)
+	{
+		e=a; f=b;
+	}
+	if(a<=c&&b>=d)
+	{
+		e=c; f=d;
+	}
+	if(a<=c&&b<=d)
+	{
+		e=c; f=b;
+	}
+	if(a>=c&&b>=d)
+	{
+		e=a; f=d;
+	}
+}
+
+int main()
+{
+	double a[100], n, m, k, l;
+	int i=0;
+
+	while(i<100)
+	{
+		cin >> a[i];
+		i++;
+	}
+	intersection(a[0],a[1],a[2],a[3],n,m);
+	i=4; 
+	while(i<100)
+	{
+		intersection(n,m,a[i],a[i+1],k,l);
+		intersection(k,l,a[i+2],a[i+3],n,m);
+		i=i+4;
+	}
+	k=m-n;
+	cout << k;
+	_getch();
+	return 0;
+}
+
